@@ -1,15 +1,11 @@
 CC = g++  # Compiler
-CFLAGS = -Wall  # Compiler flags, e.g., for warnings
+CFLAGS = -Wall  # optional flags for the compiler (eg. -Wall for warnings)
+LDFLAGS = #optional flags for the linker
 VALGRIND = valgrind #could add command options here
 
-# Rule to build all objects and executables
-all: 
-	make 1
-	make 2
-	make 3
-	make 4
-	make 5
-	make 6
+# List of source files without extensions
+# EXECS = ex1-uninitmemory ex2-dataaccess ex2-fibonacci ex3-memoryleak ex4-pair ex5-valfail
+# still trying to figure out how to utilize this
 
 # Rule for each individual target
 1: ex1-uninitmemory.exe
@@ -38,32 +34,17 @@ all:
 
 # General rule for building targets
 # example: 
-#		$@ becomes ex1-unitinmemory.exe
-#		$^ becomes ex1-unitinmemory.o
+#		$@ becomes ex1-uninitinmemory.exe
+#		$^ becomes ex1-uninitinmemory.o
 # full command becomes: g++ ex1-uninitmemory.o -o ex1-uninitmemory.exe -Wall
-ex1-uninitmemory.exe: ex1-uninitmemory.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-ex2-dataaccess.exe: ex2-dataaccess.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-ex2-fibonacci.exe: ex2-fibonacci.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-ex3-memoryleak.exe: ex3-memoryleak.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-ex4-pair.exe: ex4-pair.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-ex5-valfail.exe: ex5-valfail.o
-	$(CC) $(CFLAGS) -o $@ $^
+%.exe: %.o
+	$(CC) $(LDFLAGS) -o $@ $^
 
 # General rule for building object files
 # example:
 #		$< becomes the .cpp file
 #		$@ becomes the .o file
-# full command becomes:
+# full command becomes: g++ -c ex1-uninitmemory.cpp -o ex1-uninitmemory.o 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
